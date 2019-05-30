@@ -28,7 +28,7 @@ public class DesignTacoController {
                 new Ingredient("CHED", "Cheddar", Type.CHEESE),
                 new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
                 new Ingredient("SLSA", "Salsa", Type.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
+                new Ingredient("SRCR", "Sour Cream", Type.CHEESE)
         );
         Ingredient.Type[] types = Ingredient.Type.values();
         for (Ingredient.Type type:types){
