@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Arrays;
@@ -28,7 +29,7 @@ public class DesignTacoController {
                 new Ingredient("CHED", "Cheddar", Type.CHEESE),
                 new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
                 new Ingredient("SLSA", "Salsa", Type.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", Type.CHEESE)
+                new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
         );
         Ingredient.Type[] types = Ingredient.Type.values();
         for (Ingredient.Type type:types){
@@ -36,6 +37,12 @@ public class DesignTacoController {
         }
         model.addAttribute("design", new Taco());
         return "design";
+    }
+
+    @PostMapping
+    public String processDesign(Taco taco){
+        log.info("Processing design: " + taco);
+        return "redirect:/orders/current";
     }
 
     List<Ingredient> filterByType(List<Ingredient> ingredients, Ingredient.Type type){
