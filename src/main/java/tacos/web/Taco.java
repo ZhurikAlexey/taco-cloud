@@ -1,4 +1,4 @@
-package tacos;
+package tacos.web;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ public class Taco {
     @Value("#{taco.name.min.size}")
     static String minSize;
     //static final String str= "Name must be at least" + minSize + " characters long";
-    @Size(min = 5, message = "Name must be at least characters long")
+    @Size(min = 5, message = "Name must be at least 5 characters long")
     private String name;
     private List ingredients;
     public Taco() {

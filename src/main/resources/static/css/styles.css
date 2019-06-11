@@ -4,3 +4,6 @@ h1{
 [type="checkbox"]{
     text-underline-color:red;
 }
+.validationError{
+    color: red;
+}
