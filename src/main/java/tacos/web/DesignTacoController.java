@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import tacos.data.IngredientRepository;
+import tacos.data.TacoRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -21,10 +22,12 @@ import java.util.stream.Collectors;
 public class DesignTacoController {
 
     private final IngredientRepository ingredientRepo;
+    private TacoRepository tacoRepo;
 
     @Autowired
-    public DesignTacoController(IngredientRepository ingredientRepo){
+    public DesignTacoController(IngredientRepository ingredientRepo, TacoRepository tacoRepo){
         this.ingredientRepo = ingredientRepo;
+        this.tacoRepo = tacoRepo;
     }
 
     @GetMapping
@@ -38,6 +41,17 @@ public class DesignTacoController {
         model.addAttribute("taco", new Taco());
         return "design";
     }
+
+    @ModelAttribute(name="order")
+    public Order order(){
+        return new Order();
+    }
+
+    @ModelAttribute(name="taco")
+    public Taco taco(){
+        return new Taco();
+    }
+
 /*    @GetMapping
     public String showDesignForm(Model model){
         List<Ingredient> ingredients = Arrays.asList(
@@ -61,10 +75,12 @@ public class DesignTacoController {
     }*/
 
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute("taco") Taco design, Errors errors){
+    public String processDesign(@Valid @ModelAttribute("taco") Taco design, Errors errors, @ModelAttribute Order order){
         if(errors.hasErrors()){
             return "design";
         }
+        Taco saved = tacoRepo.save(design);
+        order.getTacos().add(saved);
         log.info("Processing design: " + design);
         return "redirect:/orders/current";
     }
